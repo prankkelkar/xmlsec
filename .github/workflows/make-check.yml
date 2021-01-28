@@ -2,7 +2,7 @@ name: Make Check
 
 on:
   push:
-    branches: [ master ]
+    branches: [ try1 ]
   pull_request:
     branches: [ master ]
 
