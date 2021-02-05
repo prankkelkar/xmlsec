@@ -49,47 +49,19 @@ jobs:
     - uses: actions/checkout@v2
     - uses: uraimo/run-on-arch-action@v2.0.8
       name: Configure and Build
-    - name: install dependencies
-      run: |
-          sudo apt update
-          sudo apt install automake autoconf libtool libtool-bin libltdl-dev libltdl7
-          sudo apt install libxml2 libxml2-dev libxslt1.1 libxslt1-dev
-          sudo apt install libssl1.0.0 libssl-dev libnspr4 libnspr4-dev libnss3 libnss3-dev libnss3-tools libgcrypt20 libgcrypt20-dev libgnutls28-dev
-    - run: mkdir build
-    - name: configure
-      working-directory: build
-      run: ../autogen.sh --enable-werror --enable-static-linking=${{ matrix.static_linking }}
-    - name: make
-      working-directory: build
-      run: make
-    - name: make check
-      working-directory: build
-      run: make check
-  
-  check-osx:
-    runs-on: macos-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - static_linking: true
-          - static_linking: false
-    steps:
-    - name: install dependencies
-      run: |
-          brew update
-          brew install automake autoconf libtool
-          # brew install libxml2 libxslt
-          brew install openssl nspr nss libgcrypt gnutls        
-    - uses: actions/checkout@v2
-    - run: mkdir build
-    - name: configure
-      working-directory: build
-      run: ../autogen.sh --enable-werror --enable-static-linking=${{ matrix.static_linking }}
-    - name: make
-      working-directory: build
-      run: make
-    - name: make check
-      working-directory: build
-      run: make check
+      id: arch-matrix-gcc
+        with:
+          arch: ${{ matrix.arch }}
+          distro: ${{ matrix.distro }}
+          shell: /bin/bash
+          install: |
+            sudo apt update
+            sudo apt install automake autoconf libtool libtool-bin libltdl-dev libltdl7
+            sudo apt install libxml2 libxml2-dev libxslt1.1 libxslt1-dev
+            sudo apt install libssl1.0.0 libssl-dev libnspr4 libnspr4-dev libnss3 libnss3-dev libnss3-tools libgcrypt20 libgcrypt20-dev libgnutls28-dev
+          run: |
+            mkdir build
+            ../autogen.sh --enable-werror --enable-static-linking=${{ matrix.static_linking }}
+            make
+            make check
   
