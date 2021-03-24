@@ -47,10 +47,10 @@ jobs:
         distro: ubuntu20.04
         shell: /bin/bash
         run: |
-          apt-get update
-          apt-get install -y sudo automake make autoconf libtool libtool-bin libltdl-dev libltdl7 pkg-config
-          apt-get install -y libxml2 libxml2-dev libxslt1.1 libxslt1-dev
-          apt-get install -y libssl1.1 libssl-dev libnspr4 libnspr4-dev libnss3 libnss3-dev libnss3-tools libgcrypt20 libgcrypt20-dev libgnutls28-dev
+          apt update
+          apt install -y sudo automake make autoconf libtool libtool-bin libltdl-dev libltdl7 pkg-config
+          apt install -y libxml2 libxml2-dev libxslt1.1 libxslt1-dev
+          apt install -y libssl1.1 libssl-dev libnspr4 libnspr4-dev libnss3 libnss3-dev libnss3-tools libgcrypt20 libgcrypt20-dev libgnutls28-dev
           mkdir build
           cd build
           ../autogen.sh --enable-werror --enable-static-linking=true
