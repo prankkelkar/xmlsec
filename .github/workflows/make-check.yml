@@ -36,7 +36,7 @@ jobs:
   
   check-s390x:
     runs-on: ubuntu-18.04
-    name: check-s390x (true)
+    name: check-s390x
       strategy:
       fail-fast: false
       matrix:
